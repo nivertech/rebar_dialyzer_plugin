@@ -108,11 +108,11 @@ dialyze(Config, File) ->
     ok.
 
 %% @doc Build the PLT.
--spec 'build-plt'(Config::rebar_config:config(), File::file:filename()) -> ok.
-'build-plt'(Config, File) ->
-    Plt = new_plt_path(Config, File),
+-spec 'build-plt'(Config0::rebar_config:config(), File::file:filename()) -> ok.
+'build-plt'(Config0, File) ->
+    Plt = new_plt_path(Config0, File),
 
-    Apps = rebar_app_utils:app_applications(Config, File),
+    {_Config, Apps} = rebar_app_utils:app_applications(Config0, File),
 
     ?DEBUG("Build PLT ~s including following apps:~n~p~n", [Plt, Apps]),
     Warnings = dialyzer:run([{analysis_type, plt_build},
